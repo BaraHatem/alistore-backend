@@ -1,6 +1,7 @@
 import express from 'express';
 import User from '../models/User.js';
 import jwt from 'jsonwebtoken';
+import sendVerificationEmail from '../utils/sendEmail.js';
 
 const router = express.Router();
 
@@ -31,14 +32,12 @@ router.post('/register', async (req, res) => {
     });
 
     if (user) {
-      // In a real application here we would send an EMAIL with the OTP.
-      // E.g., using NodeMailer. For this demonstration, we'll log it and send it in response.
-      console.log(`[DEVELOPMENT ONLY] Verification OTP for ${email}: ${otp}`);
-      
+      await sendVerificationEmail(email, otp);
+
       res.status(201).json({
         _id: user._id,
         email: user.email,
-        message: 'Registration successful. Check console for OTP.'
+        message: 'Registration successful. Check your email for the verification code.'
       });
     } else {
       res.status(400).json({ message: 'Invalid user data' });
