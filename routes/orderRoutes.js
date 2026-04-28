@@ -1,10 +1,11 @@
 import express from 'express';
 import Order from '../models/Order.js';
+import protect from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
-// Create new order
-router.post('/', async (req, res) => {
+// Create new order (requires login)
+router.post('/', protect, async (req, res) => {
   try {
     const { orderItems, shippingAddress, paymentMethod, itemsPrice, taxPrice, shippingPrice, totalPrice } = req.body;
 
