@@ -5,8 +5,8 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const domain = process.env.VITE_SHOPIFY_DOMAIN || 'cczfy0-0p.myshopify.com';
-const storefrontAccessToken = process.env.VITE_SHOPIFY_STOREFRONT_ACCESS_TOKEN || 'd5a78191075d3dd08044929e9a9d59ed';
+const domain = process.env.SHOPIFY_DOMAIN;
+const storefrontAccessToken = process.env.SHOPIFY_STOREFRONT_TOKEN;
 
 export const syncWithShopify = async () => {
   console.log('🔄 Starting Shopify Sync...');
