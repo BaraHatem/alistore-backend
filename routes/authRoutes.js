@@ -32,7 +32,12 @@ router.post('/register', async (req, res) => {
     });
 
     if (user) {
-      await sendVerificationEmail(email, otp);
+      try {
+        await sendVerificationEmail(email, otp);
+        console.log(`✅ Verification email sent to ${email}`);
+      } catch (emailError) {
+        console.error(`❌ Failed to send email to ${email}:`, emailError.message);
+      }
 
       res.status(201).json({
         _id: user._id,
@@ -43,6 +48,7 @@ router.post('/register', async (req, res) => {
       res.status(400).json({ message: 'Invalid user data' });
     }
   } catch (error) {
+    console.error('Registration error:', error.message);
     res.status(500).json({ message: 'Server error during registration' });
   }
 });
